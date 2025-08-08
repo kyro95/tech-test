@@ -72,3 +72,12 @@ $ docker-compose --profile default down
 # Delete container and volumes
 $ docker-compose --profile default down -v
 ```
+
+<br/>
+
+## Test gRPC endpoints
+
+As mentioned above download postman as your client and get the collection from the link. All the endpoints have a base body to work with to test your own calls.
+No need to import any .proto into postman since Server reflection is enabled.  
+
+![Postman screenshot](https://i.ibb.co/9DJFCQn/image.png)
