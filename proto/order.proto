@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package order;
+
+import "user.proto";
+import "product.proto";
+
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (GetOrderResponse);
+  rpc GetOrder(GetOrderRequest) returns (GetOrderResponse);
+  rpc ListOrdersByUserId(GetOrderByUserIdRequest) returns (ListOrdersResponse);
+  rpc ListOrders(GetOrderRequest) returns (ListOrdersResponse);
+  rpc DeleteOrder(DeleteOrderRequest) returns (DeleteOrderResponse);
+  rpc UpdateOrder(UpdateOrderRequest) returns (GetOrderResponse);
+}
+
+enum OrderStatus {
+  CREATED = 0;
+  PAID = 1;
+  SHIPPED = 2;
+  DELIVERED = 3;
+  CANCELLED = 4;
+  REFUNDED = 5;
+  LOST = 6;
+}
+
+message CreateOrderRequest {
+  int32 user_id = 1;
+  repeated int32 product_ids = 2;
+}
+
+message GetOrderRequest {
+  int32 id = 1;
+}
+
+message GetOrderResponse {
+  int32 id = 1;
+  int32 total_amount = 2;
+  OrderStatus status = 3;
+  User user = 4;
+  repeated Product products = 5;
+}
+
+message ListOrdersResponse {
+  repeated GetOrderResponse orders = 1;
+}
+
+message DeleteOrderRequest {
+  int32 id = 1;
+}
+
+message DeleteOrderResponse {
+  bool deleted = 1;
+  string message = 2;
+}
+
+message UpdateOrderRequest {
+  int32 id = 1;
+  int32 user_id = 2;
+  repeated int32 product_ids = 3;
+  optional int32 status = 4;
+}
+
+message GetOrderByUserIdRequest {
+  int32 id = 1;
+}
